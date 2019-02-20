@@ -1,19 +1,19 @@
-"""
-For a game with 8 tiles of blocks on a 3x3 grid,
-write down the Facts and Rules to model the game state 
-shown as the follows:
+﻿fact: (pos tile1 pos1 pos1)
+fact: (pos tile2 pos2 pos1)
+fact: (pos tile3 pos3 pos1)
+fact: (pos tile4 pos3 pos2)
+fact: (pos tile5 pos3 pos3) 
+fact: (pos tile6 pos2 pos3) 
+fact: (pos tile7 pos1 pos3)
+fact: (pos tile8 pos1 pos2)
+fact: (pos empty pos2 pos2)
 
- y\\x   pos1     pos2     pos3
-     ----------------------------
-pos1 | tile1  | tile2  | tile3  |
-     ----------------------------
-pos2 | tile8  | empty  | tile4  |
-     ----------------------------
-pos3 | tile7  | tile6  | tile5  |
-     ----------------------------
+rule: ((pos empty ?x pos1) (pos ?tile ?x pos2)) -> (movable ?tile ?x pos2 ?x pos1)
+rule: ((pos empty ?x pos2) (pos ?tile ?x pos3)) -> (movable ?tile ?x pos3 ?x pos2)
+rule: ((pos empty ?x pos2) (pos ?tile ?x pos1)) -> (movable ?tile ?x pos1 ?x pos2)
+rule: ((pos empty ?x pos3) (pos ?tile ?x pos2)) -> (movable ?tile ?x pos3 ?x pos2)
 
-Example: 
-fact: (pred obj1 obj2)
-rule: ((pred obj1 obj2) (pred obj2 obj3)) -> (pred obj1 obj3)
-
-"""
+rule: ((pos empty pos1 ?y) (pos ?tile pos2 ?y)) -> (movable ?tile pos2 ?y pos1 ?y)
+rule: ((pos empty pos2 ?y) (pos ?tile pos3 ?y)) -> (movable ?tile pos3 ?y pos2 ?y)
+rule: ((pos empty pos2 ?y) (pos ?tile pos1 ?y)) -> (movable ?tile pos1 ?y pos2 ?y)
+rule: ((pos empty pos3 ?y) (pos ?tile pos2 ?y)) -> (movable ?tile pos2 ?y pos3 ?y)
