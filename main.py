@@ -84,7 +84,7 @@ class KBTest(unittest.TestCase):
         self.assertEqual(th.getGameState(), ((2,3),(1,),()))
         th.reverseMove(movables[0])
         self.assertEqual(th.getGameState(), ((1,2,3),(),()))
-
+        """
     def test02_DFS_Hanoi(self):
         th = TowerOfHanoiGame()
         th.read('hanoi_3_all_disks_on_peg_one.txt')
@@ -205,6 +205,6 @@ class KBTest(unittest.TestCase):
             [21, ((6, 5, 4), (1, -1, 8), (7, 3, 2))],
         ])
 
-
+"""
 if __name__ == '__main__':
     unittest.main()

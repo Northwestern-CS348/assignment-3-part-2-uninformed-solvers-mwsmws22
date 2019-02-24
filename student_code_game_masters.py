@@ -33,8 +33,23 @@ class TowerOfHanoiGame(GameMaster):
         Returns:
             A Tuple of Tuples that represent the game state
         """
-        ### student code goes here
-        pass
+        
+        check_facts = ['fact: (on ?disk peg1)', 'fact: (on ?disk peg2)', 'fact: (on ?disk peg3)']
+        result = []
+
+        for fact in check_facts:
+            check_peg = self.kb.kb_ask(parse_input(fact))
+            peg = []
+
+            if check_peg:
+                for disk in check_peg:
+                    peg.append(int(disk.bindings[0].constant.element[-1]))
+                peg.sort()
+                result.append(tuple(peg))
+            else:
+                result.append(tuple())
+
+        return tuple(result)
 
     def makeMove(self, movable_statement):
         """
@@ -52,8 +67,26 @@ class TowerOfHanoiGame(GameMaster):
         Returns:
             None
         """
-        ### Student code goes here
-        pass
+
+        self.kb.kb_retract(Fact(Statement(['on', movable_statement.terms[0], movable_statement.terms[1]])))
+        self.kb.kb_retract(Fact(Statement(['top', movable_statement.terms[0], movable_statement.terms[1]])))
+        self.kb.kb_assert(Fact(Statement(['on', movable_statement.terms[0], movable_statement.terms[2]])))
+        self.kb.kb_assert(Fact(Statement(['top', movable_statement.terms[0], movable_statement.terms[2]])))
+
+        state = self.getGameState()
+        old_peg = state[int(movable_statement.terms[1].term.element[-1])-1]
+        new_peg = state[int(movable_statement.terms[2].term.element[-1])-1][1:]
+
+        if old_peg:
+            self.kb.kb_assert(Fact(Statement(['top', 'disk' + str(old_peg[0]), movable_statement.terms[1]])))
+        else:
+            self.kb.kb_assert(Fact(Statement(['empty', movable_statement.terms[1]])))
+        if new_peg:
+            self.kb.kb_retract(Fact(Statement(['top', 'disk' + str(new_peg[0]), movable_statement.terms[2]])))
+        else:
+            self.kb.kb_retract(Fact(Statement(['empty', movable_statement.terms[2]])))
+
+        return
 
     def reverseMove(self, movable_statement):
         """
