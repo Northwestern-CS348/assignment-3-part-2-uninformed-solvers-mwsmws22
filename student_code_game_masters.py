@@ -40,7 +40,6 @@ class TowerOfHanoiGame(GameMaster):
         for fact in check_facts:
             check_peg = self.kb.kb_ask(parse_input(fact))
             peg = []
-
             if check_peg:
                 for disk in check_peg:
                     peg.append(int(disk.bindings[0].constant.element[-1]))
@@ -119,6 +118,7 @@ class Puzzle8Game(GameMaster):
         """
         return parse_input('fact: (movable ?piece ?initX ?initY ?targetX ?targetY)')
 
+    @property
     def getGameState(self):
         """
         Returns a representation of the the game board in the current state.
@@ -132,8 +132,22 @@ class Puzzle8Game(GameMaster):
         Returns:
             A Tuple of Tuples that represent the game state
         """
-        ### Student code goes here
-        pass
+
+        check_facts = ['fact: (coordinate ?tile ?x pos1)', 'fact: (coordinate ?tile ?x pos2)',
+                       'fact: (coordinate ?tile ?x pos3)']
+        result = []
+
+        for fact in check_facts:
+            check_row = self.kb.kb_ask(parse_input(fact))
+            row = [0, 0, 0]
+            for tile in check_row:
+                if tile.bindings[0].constant.element == 'empty':
+                    row[int(tile.bindings[1].constant.element[-1])-1] = -1;
+                else:
+                    row[int(tile.bindings[1].constant.element[-1])-1] = int(tile.bindings[0].constant.element[-1])
+            result.append(tuple(row))
+
+        return tuple(result)
 
     def makeMove(self, movable_statement):
         """
@@ -151,8 +165,17 @@ class Puzzle8Game(GameMaster):
         Returns:
             None
         """
-        ### Student code goes here
-        pass
+
+        self.kb.kb_retract(Fact(Statement(['coordinate', movable_statement.terms[0], movable_statement.terms[1],
+                                           movable_statement.terms[2]])))
+        self.kb.kb_retract(Fact(Statement(['coordinate', 'empty', movable_statement.terms[3],
+                                           movable_statement.terms[4]])))
+        self.kb.kb_assert(Fact(Statement(['coordinate', movable_statement.terms[0], movable_statement.terms[3],
+                                          movable_statement.terms[4]])))
+        self.kb.kb_assert(Fact(Statement(['coordinate', 'empty', movable_statement.terms[1],
+                                          movable_statement.terms[2]])))
+
+        return
 
     def reverseMove(self, movable_statement):
         """
