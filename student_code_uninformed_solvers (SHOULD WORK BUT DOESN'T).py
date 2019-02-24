@@ -33,8 +33,6 @@ class SolverDFS(UninformedSolver):
                 continue
             gs.parent = self.currentState
             self.currentState = gs
-            if self.currentState.state == self.victoryCondition:
-                return True
             return False
 
         if self.currentState.parent:
