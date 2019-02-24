@@ -118,7 +118,6 @@ class Puzzle8Game(GameMaster):
         """
         return parse_input('fact: (movable ?piece ?initX ?initY ?targetX ?targetY)')
 
-    @property
     def getGameState(self):
         """
         Returns a representation of the the game board in the current state.

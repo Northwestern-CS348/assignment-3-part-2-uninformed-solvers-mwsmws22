@@ -25,7 +25,7 @@ class KBTest(unittest.TestCase):
             while self.lastEndStep < x:
                 solver.solveOneStep()
                 self.lastEndStep += 1
-            res.append(solver.gm.getGameState)
+            res.append(solver.gm.getGameState())
         return res
 
     def solve(self, solver):
@@ -84,7 +84,7 @@ class KBTest(unittest.TestCase):
         self.assertEqual(th.getGameState(), ((2,3),(1,),()))
         th.reverseMove(movables[0])
         self.assertEqual(th.getGameState(), ((1,2,3),(),()))
-        """
+
     def test02_DFS_Hanoi(self):
         th = TowerOfHanoiGame()
         th.read('hanoi_3_all_disks_on_peg_one.txt')
@@ -117,6 +117,7 @@ class KBTest(unittest.TestCase):
         solver = SolverDFS(th, ((),(),(1,2,3)))
         self.runSolve(solver)
 
+    """
     def test04_BFS_Hanoi(self):
         th = TowerOfHanoiGame()
         th.read('hanoi_3_all_disks_on_peg_one.txt')
@@ -160,14 +161,11 @@ class KBTest(unittest.TestCase):
         self.assertFalse(p8.isWon())
 
         movables = p8.getMovables()
-        self.assertEqual(p8.getGameState, ((5, 4, -1), (6, 1, 8), (7, 3, 2)))
+        self.assertEqual(p8.getGameState(), ((5,4,-1),(6,1,8),(7,3,2)))
         p8.makeMove(movables[0])
-        self.assertEqual(p8.getGameState, ((5, -1, 4), (6, 1, 8), (7, 3, 2)))
+        self.assertEqual(p8.getGameState(), ((5,-1,4), (6,1,8), (7,3,2)))
         p8.reverseMove(movables[0])
-        self.assertEqual(p8.getGameState, ((5, 4, -1), (6, 1, 8), (7, 3, 2)))
-
-
-"""
+        self.assertEqual(p8.getGameState(), ((5,4,-1),(6,1,8),(7,3,2)))
 
     def test07_DFS_8Puzzle(self):
         p8 = Puzzle8Game()
@@ -187,7 +185,7 @@ class KBTest(unittest.TestCase):
             [17, ((5, -1, 4), (2, 1, 3), (6, 7, 8))],
             [34, ((5, 4, -1), (3, 2, 1), (6, 7, 8))],
         ])
-
+        """
     def test08_BFS_8Puzzle(self):
         p8 = Puzzle8Game()
         p8.read('puzzle8_top_right_empty.txt')
@@ -206,7 +204,7 @@ class KBTest(unittest.TestCase):
             [13, ((5, 4, 8), (-1, 6, 1), (7, 3, 2))],
             [21, ((6, 5, 4), (1, -1, 8), (7, 3, 2))],
         ])
-
 """
+
 if __name__ == '__main__':
     unittest.main()

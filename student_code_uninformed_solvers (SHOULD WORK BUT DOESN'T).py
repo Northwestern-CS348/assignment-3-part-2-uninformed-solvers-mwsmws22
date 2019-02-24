@@ -31,22 +31,15 @@ class SolverDFS(UninformedSolver):
             if gs in self.visited:
                 self.gm.reverseMove(move)
                 continue
-            self.currentState.children.append(gs)
             gs.parent = self.currentState
-            self.gm.reverseMove(move)
-
-        while self.currentState.nextChildToVisit < len(self.currentState.children):
-            gs = self.currentState.children[self.currentState.nextChildToVisit]
-            self.currentState.nextChildToVisit += 1
-            if gs in self.visited:
-                continue
-            self.gm.makeMove(gs.requiredMovable)
             self.currentState = gs
+            if self.currentState.state == self.victoryCondition:
+                return True
             return False
 
-        if self.current_state.parent:
-            self.gm.reverseMove(self.current_state.requiredMovable)
-            self.currentState = self.current_state.parent
+        if self.currentState.parent:
+            self.gm.reverseMove(self.currentState.requiredMovable)
+            self.currentState = self.currentState.parent
         return False
 
 class SolverBFS(UninformedSolver):
