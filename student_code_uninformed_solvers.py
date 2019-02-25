@@ -75,11 +75,6 @@ class SolverBFS(UninformedSolver):
         print(self.currentState.state)
         movables = self.gm.getMovables()
         self.visited[self.currentState] = True
-        ##test1 = self.gm.kb.kb_ask(parse_input("fact: (top ?d ?p"))
-        ##test2 = self.gm.kb.kb_ask(parse_input("fact: (empty ?p"))
-        ##test3 = self.gm.kb.kb_ask(parse_input("fact: (on ?d peg1"))
-        ##test4 = self.gm.kb.kb_ask(parse_input("fact: (on ?d peg2"))
-        ##test5 = self.gm.kb.kb_ask(parse_input("fact: (on ?d peg3"))
         for move in movables:
             self.gm.makeMove(move)
             gs = GameState(self.gm.getGameState(), self.currentState.depth + 1, move)
@@ -95,7 +90,7 @@ class SolverBFS(UninformedSolver):
             if gs in self.visited:
                 continue
             self.moveGameState(gs)
-            self.currentState = self.gm.getGameState()
+            self.currentState = gs
             return False
 
     def moveGameState(self, gs):
