@@ -72,9 +72,9 @@ class SolverBFS(UninformedSolver):
         if self.currentState.state == self.victoryCondition:
             return True
 
-        print(self.currentState.state)
         movables = self.gm.getMovables()
         self.visited[self.currentState] = True
+
         for move in movables:
             self.gm.makeMove(move)
             gs = GameState(self.gm.getGameState(), self.currentState.depth + 1, move)
@@ -94,12 +94,18 @@ class SolverBFS(UninformedSolver):
             return False
 
     def moveGameState(self, gs):
-        while self.currentState.parent:
-            self.gm.reverseMove(self.currentState.requiredMovable)
-            self.currentState = self.currentState.parent
         actions = []
-        while gs.parent:
+
+        while self.currentState.depth < gs.depth:
             actions.append(gs.requiredMovable)
             gs = gs.parent
+
+        if self.currentState.parent:
+            while self.currentState != gs:
+                self.gm.reverseMove(self.currentState.requiredMovable)
+                self.currentState = self.currentState.parent
+                actions.append(gs.requiredMovable)
+                gs = gs.parent
+
         while actions:
             self.gm.makeMove(actions.pop())

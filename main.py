@@ -137,7 +137,7 @@ class KBTest(unittest.TestCase):
             [11, ((1,), (3,), (2,))],
             [20, ((), (2, 3), (1,))],
         ])
-"""
+
     def test05_BFS_Hanoi(self):
         th = TowerOfHanoiGame()
         th.read('hanoi_3_all_disks_on_peg_one.txt')
@@ -205,7 +205,6 @@ class KBTest(unittest.TestCase):
             [13, ((5, 4, 8), (-1, 6, 1), (7, 3, 2))],
             [21, ((6, 5, 4), (1, -1, 8), (7, 3, 2))],
         ])
-"""
 
 if __name__ == '__main__':
     unittest.main()
