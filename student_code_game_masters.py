@@ -73,20 +73,20 @@ class TowerOfHanoiGame(GameMaster):
 
         self.kb.kb_retract(Fact(Statement(['top', movable_statement.terms[0], movable_statement.terms[1]])))
 
-        if new_peg:
-            self.kb.kb_retract(Fact(Statement(['top', 'disk' + str(new_peg[0]), movable_statement.terms[2]])))
-        else:
-            self.kb.kb_retract(Fact(Statement(['empty', movable_statement.terms[2]])))
-
-        self.kb.kb_assert(Fact(Statement(['on', movable_statement.terms[0], movable_statement.terms[2]])))
-        self.kb.kb_assert(Fact(Statement(['top', movable_statement.terms[0], movable_statement.terms[2]])))
-
         if old_peg:
             self.kb.kb_assert(Fact(Statement(['top', 'disk' + str(old_peg[0]), movable_statement.terms[1]])))
         else:
             self.kb.kb_assert(Fact(Statement(['empty', movable_statement.terms[1]])))
 
+        self.kb.kb_assert(Fact(Statement(['on', movable_statement.terms[0], movable_statement.terms[2]])))
         self.kb.kb_retract(Fact(Statement(['on', movable_statement.terms[0], movable_statement.terms[1]])))
+
+        if new_peg:
+            self.kb.kb_retract(Fact(Statement(['top', 'disk' + str(new_peg[0]), movable_statement.terms[2]])))
+        else:
+            self.kb.kb_retract(Fact(Statement(['empty', movable_statement.terms[2]])))
+
+        self.kb.kb_assert(Fact(Statement(['top', movable_statement.terms[0], movable_statement.terms[2]])))
 
         return
 
