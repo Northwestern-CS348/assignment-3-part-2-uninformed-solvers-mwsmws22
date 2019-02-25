@@ -28,6 +28,6 @@ fact: (lessThan disk2 disk3)
 
 rule: ((lessThan ?disk_a ?disk_b) (lessThan ?disk_b ?disk_c)) -> (lessThan ?disk_a ?disk_c)
 
-rule: ((top ?disk_a ?peg_a) (top ?disk_b ?peg_b) (lessThan ?disk_a ?disk_b)) -> (movable ?disk_a ?peg_a ?peg_b)
+rule: ((on ?disk_a ?peg_a)(top ?disk_a ?peg_a) (top ?disk_b ?peg_b) (lessThan ?disk_a ?disk_b)) -> (movable ?disk_a ?peg_a ?peg_b)
 
-rule: ((top ?disk_a ?peg_a) (empty ?peg_b)) -> (movable ?disk_a ?peg_a ?peg_b)
+rule: ((on ?disk_a ?peg_a)(top ?disk_a ?peg_a) (empty ?peg_b)) -> (movable ?disk_a ?peg_a ?peg_b)
